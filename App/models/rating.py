@@ -6,7 +6,6 @@ class Rating(db.Model):
     userID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String(256), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
 
     
@@ -23,6 +22,5 @@ class Rating(db.Model):
             'userID': self.userID,
             'title': self.title,
             'description': self.description,
-            'rating': self.rating,
             'date': self.date
         }
