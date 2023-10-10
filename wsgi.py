@@ -150,7 +150,7 @@ def add_rating_command(sid,userid,title,description):
 def list_rating_command():
     print(list_review_log_json)
 
-"""#this command will be : flask rating list 1
+"""#this command will be : flask rating list 11
 @rating_cli.command("list", help = 'Rating object cli commands')
 @click.argument("sID", default = "1")
 def list_rating_command(sid):
