@@ -4,7 +4,8 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, update_user,add_student)
+from App.controllers import ( create_user, get_all_users_json, get_all_users, update_user,add_student,
+ update_student,update_karma,delete_student,get_all_students,add_review, list_review_log_json )
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -29,7 +30,7 @@ User Commands
 # eg : flask user <command>
 user_cli = AppGroup('user', help='User object commands') 
 
-# Then define the command and any parameters and annotate it with the group (@)
+
 # this command will be : flask user create bob bobpass
 @user_cli.command("create", help="Creates a user")
 @click.argument("username", default="rob")
@@ -47,7 +48,7 @@ def list_user_command(format):
     else:
         print(get_all_users_json())
 
-#this command will be : flask user update 1 bob
+#this command will be : flask user update 1 Josiah
 @user_cli.command("update", help="Updates a username")
 @click.argument("id", default= 1)
 @click.argument("username", default = "bob")
@@ -63,20 +64,90 @@ Student Commands
 
 student_cli = AppGroup('student', help='Student object cli commands')
 
-# this command will be : flask student add
+# this command will be : flask student add 123 Jane Chemistry 2 0
 @student_cli.command("add", help = "Adds a student object to the application")
-@click.argument("self", default = None)
-@click.argument("studentID", default = 1)
-@click.argument("studentName", default = "Jane Doe")
-@click.argument("degree", default = "Computer Science")
-@click.argument("year", default = 3)
+@click.argument("studentID", default = "1")
+@click.argument("studentName", default = "Rob")
+@click.argument("degree", default = "Biology")
+@click.argument("year", default = 1)
 @click.argument("karma", default = 0)
-def add_student_command(self,studentID,studentName,degree,year,Karma):
-    student = add_student(self,studentID,studentName,degree,year,Karma)
+def add_student_command(studentid, studentname, degree, year, karma):
+    student = add_student(studentid, studentname, degree, year, karma)
     if student:
-        print('Student added')
-    else :
+        print("student added")
+    else:
         print("Error: student was not added")
+
+#this command will be : flask student update 123 Robert Chemistry 3 0
+@student_cli.command('update', help = "Updates a student object in the application")
+@click.argument("studentID", default = "1")
+@click.argument("studentName", default = "Rob")
+@click.argument("degree", default = "Biology")
+@click.argument("year", default = 1)
+@click.argument("karma", default = 0)
+def update_student_command(studentid,studentname, degree, year, karma):
+    student = update_student(studentid, studentname, degree, year, karma)
+    if student:
+        print("student updated")
+    else:
+        print("Error: student was not updated")
+    
+# this command will be : flask student update_karma 123 0 1
+@student_cli.command('update_karma', help = "Updates a students karma score")
+@click.argument("studentID", default = "1")
+@click.argument("karma", default = 0)
+@click.argument("score", default = 1)
+def updatekarma_student_command(studentid, karma, score):
+    karma = update_karma(studentid,karma,score)
+    if karma:
+        print("karma updated")
+    else:
+        print("Error: karma was not updated")
+    
+#this command will be : flask student delete 123
+@student_cli.command('delete', help = "Deletes a student that was to the application")
+@click.argument("studentID", default = "1")
+def delete_student_command(studentid):
+    deleted = delete_student(studentid)
+    if deleted:
+        print("student deleted")
+    else:
+        print("Error: student was not updated")
+
+#this command will be : flask student list
+@student_cli.command('list', help = "Lists all students that were added to the application")
+def list_student_command():
+    print(get_all_students())
+
+app.cli.add_command(student_cli) # add the group to the cli
+
+'''
+Rating Commands
+'''
+rating_cli = AppGroup('rating', help='Rating object cli commands')
+
+#this command will be : flask rating add 123 1 good_student student_is_performing_well
+@rating_cli.command("add", help = 'Adds a rating to a particular student')
+@click.argument("sID", default = "1")
+@click.argument("userID", default = 1)
+@click.argument("title", default = "Rating")
+@click.argument("description", default = "Student is well behaved")
+def add_rating_command(sid,userid,title,description):
+    rating = add_review(sid, userid, title, description)
+    if rating:
+        print("student review created")
+    else:
+        print("Error: student review not created")
+
+#this command will be : flask rating list 123
+@rating_cli.command("list", help = 'Rating object cli commands')
+@click.argument("sID", default = "1")
+def list_rating_command(sid):
+    print(list_review_log_json(sid))
+
+
+    
+app.cli.add_command(rating_cli) # add the group to the cli
 
 '''
 Test Commands
