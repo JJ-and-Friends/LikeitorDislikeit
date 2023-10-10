@@ -12,7 +12,7 @@ def add_student(studentName, degree, year, karma):
     except Exception as e:
         return False, str(e)
 
-def get_student_by_id( studentID):
+def get_student_by_id(studentID):
     student = Student.query.filter_by(studentID=studentID).first()
     return student
 
@@ -24,7 +24,7 @@ def get_all_students():
     students = Student.query.all()
     return students
 
-def update_student( studentID, studentName, degree, year, karma):
+def update_student(studentID, studentName, degree, year, karma):
     try:
         student = Student.query.filter_by(studentID=studentID).first()
         student.studentName = studentName
