@@ -7,7 +7,7 @@ class User(db.Model, UserMixin):
     username =  db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
 
-    ratings = db.relationship('Rating', backref='user', lazy=True)
+    ratings = db.relationship('Rating', backref=db.backref('user', lazy='joined'))
 
     def __init__(self, username, password):
         self.username = username

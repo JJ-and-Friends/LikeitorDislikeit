@@ -7,8 +7,8 @@ class Student(db.Model):
     year = db.Column(db.Integer, nullable=False)
     karma = db.Column(db.Integer, nullable=False)
     
-    ratings = db.relationship('Rating', backref='student', lazy=True)
-
+    ratings = db.relationship('Rating', backref=db.backref('student', lazy='joined'))
+    
     def __init__(self, studentName, degree, year, karma):
         self.studentName = studentName
         self.degree = degree

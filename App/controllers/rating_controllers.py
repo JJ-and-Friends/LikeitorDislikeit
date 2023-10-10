@@ -1,17 +1,26 @@
 from datetime import datetime
 from App.database import db
 from App.models import Rating
+from App.models import Student
+from App.models import User
 
 
-def add_review(sID, userID, title, description):
+def add_review(sid, uid, title, description):
     try:
-        date = datetime.now()
-        review = Rating(studentID=sID, userID=userID, title=title, description=description, date=date)
+        #date = datetime.now()
+        """student = Student.query.get(sid)
+        user = User.query.get(uid)
+        if student and user:
+            review = Rating(student.studentID, user.id, title, description)
+        else:
+            return "could not create review (controller)"""
+        review = Rating(sid, uid, title, description)
         db.session.add(review)
         db.session.commit()
         return True, "Review added successfully"
     except Exception as e:
-        return False, str(e)
+        db.session.rollback()
+        return False, "Review could not be added (controller)"
 
 
 

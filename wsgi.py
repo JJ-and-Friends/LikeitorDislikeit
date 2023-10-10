@@ -15,10 +15,12 @@ migrate = get_migrate(app)
 # This command creates and initializes the database
 @app.cli.command("init", help="Creates and initializes the database")
 def initialize():
-    #db.drop_all()
-    #db.create_all()
-    #create_user('bob', 'bobpass')
+    db.drop_all()
+    db.create_all()
+    create_user('bob', 'bobpass')
     create_user('sarah', 'sarahpass')
+    add_student('Jane', 'CS', '1', '0')
+
     print('database intialized')
 
 '''
@@ -40,7 +42,7 @@ def create_user_command(username, password):
     create_user(username, password)
     print(f'{username} created!')
 
-# this command will be : flask user list users
+# this command will be : flask user list
 @user_cli.command("list", help="Lists users in the database")
 @click.argument("format", default="string")
 def list_user_command(format):
@@ -73,12 +75,13 @@ student_cli = AppGroup('student', help='Student object cli commands')
 @click.argument("karma", default = 0)
 def add_student_command(studentname, degree, year, karma):
     student = add_student(studentname, degree, year, karma)
+    print(student)
     if student:
         print("student added")
     else:
         print("Error: student was not added")
 
-#this command will be : flask student update Robert Chemistry 3 0
+#this command will be : flask student update 1 Robert Chemistry 3 0
 @student_cli.command('update', help = "Updates a student object in the application")
 @click.argument("studentID", default = "1")
 @click.argument("studentName", default = "Rob")
@@ -134,21 +137,22 @@ rating_cli = AppGroup('rating', help='Rating object cli commands')
 
 #this command will be : flask rating add 1 1 good_student student_is_performing_well
 @rating_cli.command("add", help = 'Adds a rating to a particular student')
-@click.argument("sID", default = "1")
-@click.argument("userID", default = 1)
+@click.argument("sid", default = "1")
+@click.argument("uid", default = "1")
 @click.argument("title", default = "Rating")
 @click.argument("description", default = "Student is well behaved")
-def add_rating_command(sid,userid,title,description):
-    rating = add_review(sid, userid, title, description)
+def add_rating_command(sid,uid,title,description):
+    rating = add_review(sid, uid, title, description)
+    print(rating)
     if rating:
         print("student review created")
     else:
-        print("Error: student review not created")
+        print("Error: student review not created (WSGI)")
 
 #this command will be : flask rating list
 @rating_cli.command("list", help = 'Rating object cli commands')
 def list_rating_command():
-    print(list_review_log_json)
+    print(list_review_log_json())
 
 """#this command will be : flask rating list 11
 @rating_cli.command("list", help = 'Rating object cli commands')
