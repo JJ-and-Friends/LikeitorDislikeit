@@ -9,7 +9,9 @@ class Rating(db.Model):
     date = db.Column(db.DateTime, nullable=False)
 
     
-    def __init__(self, title, description, date):
+    def __init__(self, studentID, userID, title, description, date):
+        self.studentID = studentID
+        self.userID = id
         self.title = title
         self.description = description
         self.date = date

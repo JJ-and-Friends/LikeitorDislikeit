@@ -6,6 +6,7 @@ class Student(db.Model):
     degree = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     karma = db.Column(db.Integer, nullable=False)
+    
     ratings = db.relationship('Rating', backref='student', lazy=True)
 
     def __init__(self, studentName, degree, year, karma):
