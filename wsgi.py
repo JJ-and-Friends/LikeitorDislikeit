@@ -5,7 +5,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users, update_user,add_student,
- update_student,update_karma,delete_student,get_all_students,add_review, list_review_log_json )
+ update_student,update_karma,delete_student,get_all_students,get_student_by_id, add_review, list_review_log_json )
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -64,7 +64,7 @@ Student Commands
 
 student_cli = AppGroup('student', help='Student object cli commands')
 
-# this command will be : flask student add 123 Jane Chemistry 2 0
+# this command will be : flask student add Jane Chemistry 2 0
 @student_cli.command("add", help = "Adds a student object to the application")
 @click.argument("studentName", default = "Rob")
 @click.argument("degree", default = "Biology")
@@ -77,7 +77,7 @@ def add_student_command(studentname, degree, year, karma):
     else:
         print("Error: student was not added")
 
-#this command will be : flask student update 123 Robert Chemistry 3 0
+#this command will be : flask student update Robert Chemistry 3 0
 @student_cli.command('update', help = "Updates a student object in the application")
 @click.argument("studentID", default = "1")
 @click.argument("studentName", default = "Rob")
@@ -117,6 +117,12 @@ def delete_student_command(studentid):
 @student_cli.command('list', help = "Lists all students that were added to the application")
 def list_student_command():
     print(get_all_students())
+
+#this command will be : flask student list_by_id 1
+@student_cli.command('list_by_id', help = "Lists student by id that were added to the application")
+@click.argument("studentID", default = "1")
+def list_student_by_name_command(studentid):
+    print(get_student_by_id(studentid))
 
 app.cli.add_command(student_cli) # add the group to the cli
 
