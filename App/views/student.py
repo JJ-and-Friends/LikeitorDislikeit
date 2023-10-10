@@ -38,7 +38,7 @@ def get_student_by_id_route(sid):
         if student:
             # Convert the student object to a dictionary
             student_dict = {
-                'studentName': student.studentname,
+                'studentName': student.studentName,
                 'degree': student.degree,
                 'year': student.year,
                 'karma': student.karma
@@ -51,8 +51,8 @@ def get_student_by_id_route(sid):
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
  
 
-@student_views.route('/student/get-students-by-name', methods=['GET'])
-def get_students_by_name_route():
+@student_views.route('/student/get-students-by-name/<string:studentName>', methods=['GET'])
+def get_students_by_name_route(studentName):
     try:
         # Get the 'sname' query parameter from the request
         sname = request.args.get('studentName')

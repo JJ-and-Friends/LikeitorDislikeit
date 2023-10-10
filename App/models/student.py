@@ -1,15 +1,14 @@
 from App.database import db
 
 class Student(db.Model):
-    studentID = db.Column(db.String(10), primary_key=True)
+    studentID = db.Column(db.Integer, primary_key=True)
     studentName = db.Column(db.String(50), nullable=False)
     degree = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     karma = db.Column(db.Integer, nullable=False)
     ratings = db.relationship('Rating', backref='student', lazy=True)
 
-    def __init__(self, studentID, studentName, degree, year, karma):
-        self.studentID = studentID
+    def __init__(self, studentName, degree, year, karma):
         self.studentName = studentName
         self.degree = degree
         self.year = year

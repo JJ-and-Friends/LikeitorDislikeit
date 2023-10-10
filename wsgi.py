@@ -15,9 +15,9 @@ migrate = get_migrate(app)
 # This command creates and initializes the database
 @app.cli.command("init", help="Creates and initializes the database")
 def initialize():
-    db.drop_all()
-    db.create_all()
-    create_user('bob', 'bobpass')
+    #db.drop_all()
+    #db.create_all()
+    #create_user('bob', 'bobpass')
     print('database intialized')
 
 '''
@@ -66,13 +66,12 @@ student_cli = AppGroup('student', help='Student object cli commands')
 
 # this command will be : flask student add 123 Jane Chemistry 2 0
 @student_cli.command("add", help = "Adds a student object to the application")
-@click.argument("studentID", default = "1")
 @click.argument("studentName", default = "Rob")
 @click.argument("degree", default = "Biology")
 @click.argument("year", default = 1)
 @click.argument("karma", default = 0)
-def add_student_command(studentid, studentname, degree, year, karma):
-    student = add_student(studentid, studentname, degree, year, karma)
+def add_student_command(studentname, degree, year, karma):
+    student = add_student(studentname, degree, year, karma)
     if student:
         print("student added")
     else:
