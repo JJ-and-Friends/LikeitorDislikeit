@@ -1,4 +1,3 @@
-import csv
 from datetime import datetime
 from App.database import db
 from App.models import Rating
@@ -6,24 +5,7 @@ from App.models import Rating
 def __init__(self, csv_file_path):
     self.csv_file_path = 'App/static/ratinglog.csv'
 
-def read_from_csv(self):
-    try:
-        with open(self.csv_file_path, 'r', newline='') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                date = datetime.strptime(row['date'], '%Y-%m-%d %H:%M:%S')
-                review = Rating(
-                    studentID=row['studentID'],
-                    userID=row['userID'],
-                    title=row['title'],
-                    description=row['description'],
-                    date=date
-                )
-                db.session.add(review)
-            db.session.commit()
-        return True, "Model populated from CSV successfully"
-    except Exception as e:
-        return False, str(e)
+
 
 def add_review(self, sID, userID, title, description):
     try:
@@ -44,6 +26,7 @@ def list_review_log_json(self, sID):
     except Exception as e:
         return False, str(e)
 
+<<<<<<< Updated upstream
 def write_reviews_to_csv(self):
     try:
         reviews = Rating.query.all()
@@ -64,5 +47,30 @@ def write_reviews_to_csv(self):
                 })
 
         return True, "Reviews written to CSV file successfully"
+=======
+def calculate_karma(studentID):
+    try:
+        # Retrieve all ratings for the student
+        ratings = Rating.query.filter_by(studentID=studentID).all()
+        
+        # Calculate karma based on some logic (for example, the average rating)
+        if ratings:
+            total_ratings = len(ratings)
+            total_rating_value = sum([rating.rating_value for rating in ratings])
+            average_rating = total_rating_value / total_ratings
+            karma = int(average_rating * 10)  # Example: Scale average rating to a karma value
+        else:
+            karma = 0  # Default karma if no ratings
+        
+        return True, karma
+>>>>>>> Stashed changes
+    except Exception as e:
+        return False, str(e)
+    
+def get_karma():
+    try:
+        karma = Rating.query.filter_by(karma=karma).all()
+        karma_data = [karma.get_json() for karma in karma]
+        return karma_data
     except Exception as e:
         return False, str(e)

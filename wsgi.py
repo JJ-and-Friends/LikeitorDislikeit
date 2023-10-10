@@ -50,6 +50,29 @@ def list_user_command(format):
 app.cli.add_command(user_cli) # add the group to the cli
 
 '''
+<<<<<<< Updated upstream
+=======
+Student Commands
+'''
+
+student_cli = AppGroup('student', help='Student object cli commands')
+
+# this command will be : flask student add
+@student_cli.command("add", help = "Adds a student object to the application")
+@click.argument("studentID", default = 1)
+@click.argument("studentName", default = "bob")
+@click.argument("degree", default = "CS")
+@click.argument("year", default = 1)
+@click.argument("karma", default = 0)
+def add_student_command(studentID, studentName, degree, year, karma):
+    add_student(studentID, studentName, degree, year, karma)
+    print(f'{studentName} added!')
+    app.cli.add_command(student_cli)
+    
+
+
+'''
+>>>>>>> Stashed changes
 Test Commands
 '''
 
