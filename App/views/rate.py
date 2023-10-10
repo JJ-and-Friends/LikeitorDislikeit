@@ -1,12 +1,25 @@
+<<<<<<< Updated upstream
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import current_user as jwt_current_user
 from flask_login import current_user, login_required
 
 from App.controllers import (
+=======
+from flask import Blueprint, render_template, jsonify, requests, send_from_directory, Flask, redirect, url_for
+from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from flask_login import current_user, login_required
+
+from .index import index_views
+
+from App.controllers import (
+    add_review,
+    list_review_log_json
+>>>>>>> Stashed changes
 )
 
 rate_views = Blueprint('rate_views', __name__, template_folder='../templates')
 
+<<<<<<< Updated upstream
 '''
 Page/Action Routes
 '''
@@ -28,3 +41,5 @@ Page/Action Routes
 # ['Delete Request'] <-- deletion of a description instance made
 
 @rate_views.route()
+=======
+>>>>>>> Stashed changes
