@@ -15,11 +15,10 @@ def add_review(sID, userID, title, description):
 
 
 
-def list_review_log_json(sID):
+def list_review_log_json():
     try:
-        reviews = Rating.query.filter_by(studentID=sID).all()
-        review_data = [review.get_json() for review in reviews]
-        return review_data
+        reviews = Rating.query.all()
+        return reviews
     except Exception as e:
         return False, str(e)
 

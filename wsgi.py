@@ -18,6 +18,7 @@ def initialize():
     #db.drop_all()
     #db.create_all()
     #create_user('bob', 'bobpass')
+    create_user('sarah', 'sarahpass')
     print('database intialized')
 
 '''
@@ -131,7 +132,7 @@ Rating Commands
 '''
 rating_cli = AppGroup('rating', help='Rating object cli commands')
 
-#this command will be : flask rating add 123 1 good_student student_is_performing_well
+#this command will be : flask rating add 1 1 good_student student_is_performing_well
 @rating_cli.command("add", help = 'Adds a rating to a particular student')
 @click.argument("sID", default = "1")
 @click.argument("userID", default = 1)
@@ -144,11 +145,16 @@ def add_rating_command(sid,userid,title,description):
     else:
         print("Error: student review not created")
 
-#this command will be : flask rating list 123
+#this command will be : flask rating list
+@rating_cli.command("list", help = 'Rating object cli commands')
+def list_rating_command():
+    print(list_review_log_json)
+
+"""#this command will be : flask rating list 11
 @rating_cli.command("list", help = 'Rating object cli commands')
 @click.argument("sID", default = "1")
 def list_rating_command(sid):
-    print(list_review_log_json(sid))
+    print(list_review_log_json(sid))"""
 
 
     
