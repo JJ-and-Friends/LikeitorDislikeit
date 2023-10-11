@@ -106,6 +106,7 @@ def get_all_students_route():
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
 # Update a student via PUT request
+@student_views.route('/student/update-student/<int:sid>', methods=['PUT'])
 def update_student_route(id):
     try:
         # Get JSON data from the request
