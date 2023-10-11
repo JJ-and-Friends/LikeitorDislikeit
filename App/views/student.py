@@ -78,7 +78,7 @@ def get_students_by_name_route(studentName):
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
 # Get all students via GET request
-@student_views.route('/student/get-all-students', methods=['GET'])
+@student_views.route('/student', methods=['GET'])
 def get_all_students_route():
     try:
         # Call the controller function to get all students
