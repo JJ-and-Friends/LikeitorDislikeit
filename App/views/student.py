@@ -107,13 +107,13 @@ def get_all_students_route():
 
 # Update a student via PUT request
 @student_views.route('/student/update-student/<int:sid>', methods=['PUT'])
-def update_student_route(id):
+def update_student_route(sid):
     try:
         # Get JSON data from the request
         data = request.get_json()
 
         # Call the controller function to update a student
-        success, message = update_student(id, data.get('studentName'), data.get('degree'), data.get('year'), data.get('karma'))
+        success, message = update_student(sid, data.get('studentName'), data.get('degree'), data.get('year'), data.get('karma'))
 
         if success:
             return jsonify({'message': message}), 200  # 200 OK status code for successful update
