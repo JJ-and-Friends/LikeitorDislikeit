@@ -49,16 +49,14 @@ def get_student_by_id_route(sid):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
- 
 
-@student_views.route('/student/get-students-by-name/<string:studentName>', methods=['GET'])
+# Get student by name via GET request
+@student_views.route('/student/<string:studentName>', methods=['GET'])
 def get_students_by_name_route(studentName):
     try:
-        # Get the 'sname' query parameter from the request
-        sname = request.args.get('studentName')
-
+        # 'studentName' is already captured by the route parameter
         # Call the controller function to get students by name
-        students = get_students_by_name(sname)
+        students = get_students_by_name(studentName)
 
         if students:
             # Convert the list of student objects to a list of dictionaries
@@ -105,15 +103,15 @@ def get_all_students_route():
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-# Update a student via POST request
+# Update a student via PUT request
 @student_views.route('/student/update-student/<int:sid>', methods=['PUT'])
-def update_student_route(sid):
+def update_student_route(id):
     try:
         # Get JSON data from the request
         data = request.get_json()
 
         # Call the controller function to update a student
-        success, message = update_student(sid, data.get('studentName'), data.get('degree'), data.get('year'), data.get('karma'))
+        success, message = update_student(id, data.get('studentName'), data.get('degree'), data.get('year'), data.get('karma'))
 
         if success:
             return jsonify({'message': message}), 200  # 200 OK status code for successful update
@@ -123,21 +121,20 @@ def update_student_route(sid):
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
+# Delete student via DELETE request
 @student_views.route('/student/delete-student/<int:sid>', methods=['DELETE'])
 def delete_student_route(sid):
     try:
         # Call the controller function to delete a student
         success, message = delete_student(sid)
-
         if success:
             return jsonify({'message': message}), 200  # 200 OK status code for successful deletion
         else:
             return jsonify({'error': message}), 400  # 400 Bad Request status code for errors
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-# Update a student's karma via POST request
+# Update karma via PUT request
 @student_views.route('/student/update-karma/<int:sid>', methods=['PUT'])
 def update_karma_route(sid):
     try:
