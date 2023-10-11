@@ -49,11 +49,13 @@ def get_student_by_id_route(sid):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
+ 
 
 @student_views.route('/student/<string:studentName>', methods=['GET'])
 def get_students_by_name_route(studentName):
     try:
         # 'studentName' is already captured by the route parameter
+
         # Call the controller function to get students by name
         students = get_students_by_name(studentName)
 
@@ -103,7 +105,6 @@ def get_all_students_route():
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
 # Update a student via PUT request
-@student_views.route('/student/update-student/<int:sid>', methods=['PUT'])
 def update_student_route(id):
     try:
         # Get JSON data from the request
@@ -120,7 +121,6 @@ def update_student_route(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-# Delete student via DELETE request
 @student_views.route('/student/delete-student/<int:sid>', methods=['DELETE'])
 def delete_student_route(sid):
     try:
@@ -133,7 +133,6 @@ def delete_student_route(sid):
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-# Update karma via PUT request
 @student_views.route('/student/update-karma/<int:sid>', methods=['PUT'])
 def update_karma_route(sid):
     try:
