@@ -1,7 +1,7 @@
 
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, Flask, redirect, url_for
-from flask_jwt_extended import jwt_required, current_user as jwt_current_user
-from flask_login import current_user, login_required
+#from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+#from flask_login import current_user, login_required
 
 from .index import index_views
 
@@ -34,14 +34,24 @@ def add_rating():
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-@rate_views.route('/rate/get-reviews/', methods=['GET'])
+@rate_views.route('/rate/get-reviews', methods=['GET'])
 def get_reviews():
     try:
         # Call the controller function to get the list of reviews
         reviews = list_review_log_json()
 
         if reviews:
-            return jsonify(reviews), 200  # 200 OK status code for successful retrieval
+            reviews_list = [
+                {
+                    'ratingID': review.ratingID,
+                    'studentID': review.studentID,
+                    'userID': review.userID,
+                    'title': review.title,
+                    'description': review.description,
+                }
+                for review in reviews
+            ]
+            return jsonify(reviews_list), 200  # 200 OK status code for successful retrieval
         else:
             return jsonify({'error': 'No reviews found'}), 404  # 404 Not Found status code if no reviews found
 
