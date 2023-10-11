@@ -142,7 +142,7 @@ def update_karma_route(sid):
         data = request.get_json()
 
         # Call the controller function to update a student's karma
-        success, message = update_karma(sid, data.get('karma'), data.get('score'))
+        success, message = update_karma(sid, data.get('karma'))
 
         if success:
             return jsonify({'message': message}), 200  # 200 OK status code for successful update

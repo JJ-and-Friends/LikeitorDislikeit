@@ -34,7 +34,7 @@ def add_rating():
     except Exception as e:
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
-@rate_views.route('/rate/get-reviews/', methods=['POST'])
+@rate_views.route('/rate/get-reviews/', methods=['GET'])
 def get_reviews():
     try:
         # Call the controller function to get the list of reviews
