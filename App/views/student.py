@@ -13,21 +13,21 @@ from App.controllers import (
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
 
-@student_views.route('/student/<string:name>/<string:degree>/<int:year>/<int:karma>', methods=['POST'])
+student_views.route('/student/add-student', methods=['POST'])
 def add_student_route():
     try:
         # Get JSON data from the request
-        data = request.get_json(sname, degree, year, karma)
+        data = request.get_json()
         # Call the controller function to add a student
-        success, message = add_student(sname, degree, year, karma)
+        success, message = add_student(data.get('studentName'), data.get('degree'), data.get('year'), data.get('karma'))
         if success:
             return jsonify({'message': message}), 201  # 201 Created status code for successful addition
         else:
-            return jsonify({'error': message}), 400  # 400 Bad Request status code for errors
-
-    except Exception as e:
+@@ -51,14 +51,13 @@ def get_student_by_id_route(sid):
         return jsonify({'error': str(e)}), 500  # 500 Internal Server Error for unexpected exceptions
 
+
+        
 # Get a student by ID via GET request
 @student_views.route('/student/<int:sid>', methods=['GET'])
 def get_student_by_id_route(sid):
