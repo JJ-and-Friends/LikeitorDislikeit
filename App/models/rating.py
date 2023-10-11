@@ -6,7 +6,7 @@ class Rating(db.Model):
     studentID = db.Column(db.Integer, db.ForeignKey('student.studentID'), nullable=False)
     userID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     title = db.Column(db.String, nullable=False)
-    description = db.Column(db.String(256), nullable=False)
+    description = db.Column(db.String(512))
     #date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     
