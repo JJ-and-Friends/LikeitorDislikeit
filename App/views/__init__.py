@@ -7,5 +7,5 @@ from .rate import rate_views
 from .student import student_views
 
 
-views = [user_views, index_views, auth_views, student_views] 
+views = [user_views, index_views, auth_views, rate_views, student_views] 
 # blueprints must be added to this list
