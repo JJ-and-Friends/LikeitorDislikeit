@@ -27,22 +27,32 @@ def get_all_students():
 def update_student(studentID, studentName, degree, year, karma):
     try:
         student = Student.query.filter_by(studentID=studentID).first()
-        student.studentName = studentName
-        student.degree = degree
-        student.year = year
-        student.karma = karma
-        db.session.commit()
-        return True, "Student updated successfully"
+        if student:
+            student.studentName = studentName
+            student.degree = degree
+            student.year = year
+            student.karma = karma
+            db.session.commit()
+            return True, "Student updated successfully"
+        else: 
+            db.session.rollback()
+            return False, "Student does not exist"
     except Exception as e:
+        db.session.rollback()
         return False, str(e)
 
 def update_karma(studentID, karma):
     try:
         student = Student.query.filter_by(studentID=studentID).first()
-        student.karma = karma + student.karma
-        db.session.commit()
-        return True, "Student updated successfully"
+        if student:
+            student.karma = karma + student.karma
+            db.session.commit()
+            return True, "Student updated successfully"
+        else:
+            db.session.rollback()
+            return False, "Student does not exist"
     except Exception as e:
+        db.session.rollback()
         return False, str(e)
 
 def delete_student(studentID):
