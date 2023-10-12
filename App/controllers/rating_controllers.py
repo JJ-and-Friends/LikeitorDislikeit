@@ -7,13 +7,22 @@ from App.models import User
 
 def add_review(sid, uid, title, description):
     try:
-        #date = datetime.now()
-        """student = Student.query.get(sid)
+        student = Student.query.get(sid)
         user = User.query.get(uid)
         if student and user:
             review = Rating(student.studentID, user.id, title, description)
+            db.session.add(review)
+            db.session.commit()
+            return True, "Review added successfully"
         else:
-            return "could not create review (controller)"""
+            db.session.rollback()
+            return False, "could not create review (controller)"
+    except Exception as e:
+        db.session.rollback()
+        return False, "Review could not be added (controller)" 
+
+        """
+        #no check db
         review = Rating(sid, uid, title, description)
         db.session.add(review)
         db.session.commit()
@@ -21,6 +30,7 @@ def add_review(sid, uid, title, description):
     except Exception as e:
         db.session.rollback()
         return False, "Review could not be added (controller)"
+        """
 
 
 
@@ -30,4 +40,3 @@ def list_review_log_json():
         return reviews
     except Exception as e:
         return False, str(e)
-
