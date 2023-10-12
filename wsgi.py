@@ -135,7 +135,7 @@ Rating Commands
 '''
 rating_cli = AppGroup('rating', help='Rating object cli commands')
 
-#this command will be : flask rating add 1 1 good_student student_is_performing_well
+#this command will be : 
 @rating_cli.command("add", help = 'Adds a rating to a particular student')
 @click.argument("sid", default = "1")
 @click.argument("uid", default = "1")
