@@ -43,14 +43,10 @@ def update_student(studentID, studentName, degree, year, karma):
 
 def update_karma(studentID, karma):
     try:
-        student = Student.query.filter_by(studentID=studentID).first()
-        if student:
-            student.karma = karma + student.karma
-            db.session.commit()
-            return True, "Student updated successfully"
-        else:
-            db.session.rollback()
-            return False, "Student does not exist"
+        student.karma = karma + student.karma
+        db.session.commit()
+        return True, "Student updated successfully"
+
     except Exception as e:
         db.session.rollback()
         return False, str(e)
