@@ -11,7 +11,7 @@ from App.controllers import (
     login,
     get_user,
     get_user_by_username,
-    update_user
+    update_user,
 
     #Rating Testing
     add_review,
@@ -57,14 +57,71 @@ class UserUnitTests(unittest.TestCase):
         user = User("bob", password)
         assert user.check_password(password)
 
-""" 
+
 class RatingUnitTests(unittest.TestCase):
 
-    def test_add_review(self):
-        rating = Rating(1, 1, 'Good Sleep', 'After a great massage i had a good nap during lunch')
-        user__json = rating.get_json()
-        self.assertDictEqual(user__json, {"ratingID":None, "studentID": 1, "userID": 1, "Title":"Good Sleep", "description":"After a great massage i had a good nap during lunch" })
- """
+    def test_new_rating(self):
+        rating = Rating(1, 1, 'Good Sleep', 'After a great massage, I had a good nap during lunch')
+        assert rating.studentID == 1
+        assert rating.userID == 1
+        assert rating.title == 'Good Sleep'
+        assert rating.description == 'After a great massage, I had a good nap during lunch'
+
+    def test_get_json(self):
+        rating = Rating(1, 1, 'Good Sleep', 'After a great massage, I had a good nap during lunch')
+        rating_json = rating.get_json()
+        self.assertDictEqual(rating_json, {
+            "ratingID": None,
+            "studentID": 1,
+            "userID": 1,
+            "Title": "Good Sleep",
+            "description": "After a great massage, I had a good nap during lunch"
+        })
+
+
+
+class StudentUnitTesting(unittest.TestCase):
+    def test_new_student(self):
+        student = Student("John Doe", "Computer Science", 2, 88)
+        assert student.studentName == "John Doe"
+        assert student.degree == "Computer Science"
+        assert student.year == 2
+        assert student.karma == 88
+
+
+    def test_get_student_json(self):
+        student = Student("Alice Smith", "Data Science", 4, 12)
+        student_json = student.get_json()
+        self.assertDictEqual(student_json, {
+            "studentID": None,
+            "name": "Alice Smith",
+            "major": "Data Science",
+            "year": 4,
+            "karma": 12,
+        })
+
+    def test_update_student(self):
+        student = Student("John Doe", "Computer Science", 1, 16)
+        student.update_student(studentName="Jane Smith", degree="Software Engineering", year=3, karma=9)
+        assert student.studentName == "Jane Smith"
+        assert student.degree == "Software Engineering"
+        assert student.year == 3
+        assert student.karma == 9
+
+    def test_update_karma(self):
+        student = Student("Alice Smith", "Data Science",4, 13)
+        student.update_karma(5)
+        assert student.karma == 5
+ 
+    def test_delete_student(self):
+        student = Student("Bob Johnson", "Electrical Engineering")
+        student_id = student.studentID  # Get the student's ID before deletion
+        student.delete_student(1)
+        # Check if the student can no longer be retrieved by ID
+        deleted_student = get_student_by_id(student_id)
+        assert deleted_student is None
+
+
 
 '''
     Integration Tests
@@ -74,7 +131,7 @@ class RatingUnitTests(unittest.TestCase):
 # scope="class" would execute the fixture once and resued for all methods in the class
 @pytest.fixture(autouse=True, scope="module")
 def empty_db():
-    app = create_app({'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///test.db'})
+    app = create_app({'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'postgresql://software01:IeGSU0VHqiUqOPZzxhM1PFx5s3msxXgz@dpg-ckjeacolk5ic73dh6i40-a.oregon-postgres.render.com/software_eng'})
     create_db()
     yield app.test_client()
     db.drop_all()
@@ -99,3 +156,18 @@ class UsersIntegrationTests(unittest.TestCase):
         update_user(1, "ronnie")
         user = get_user(1)
         assert user.username == "ronnie"
+
+class RatingIntegrationTests(unittest.TestCase):
+    
+    def test_add_review(self):
+        add_review(1, 1, 'Good Sleep', 'After a great massage, I had a good nap during lunch')
+        reviews = list_review_log_json()
+        self.assertListEqual([{
+            "ratingID": 1,
+            "studentID": 1,
+            "userID": 1,
+            "Title": "Good Sleep",
+            "description": "After a great massage, I had a good nap during lunch"
+        }], reviews)
+
+class StudentIntegrationTests(unittest.TestCase):
