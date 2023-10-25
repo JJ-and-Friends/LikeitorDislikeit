@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.main import create_app
 from App.database import db, create_db
 from App.models import User, Student, Rating
-from App.controllers import (
+from App.controllers import(
     #User Teesting
     create_user,
     get_all_users_json,
@@ -12,11 +12,9 @@ from App.controllers import (
     get_user,
     get_user_by_username,
     update_user,
-
     #Rating Testing
     add_review,
     list_review_log_json,
-
     #Student Testing
     add_student,
     get_student_by_id,
@@ -24,8 +22,7 @@ from App.controllers import (
     get_all_students,
     update_student,
     update_karma,
-    delete_student
-
+    delete_student,
 )
 
 
@@ -59,12 +56,11 @@ class UserUnitTests(unittest.TestCase):
 
 
 class RatingUnitTests(unittest.TestCase):
-
     def test_new_rating(self):
         rating = Rating(1, 1, 'Good Sleep', 'After a great massage, I had a good nap during lunch')
         assert rating.studentID == 1
         assert rating.userID == 1
-        assert rating.title == 'Good Sleep'
+        assert rating.title == 'Good Sleep'  # Use lowercase 'title'
         assert rating.description == 'After a great massage, I had a good nap during lunch'
 
     def test_get_json(self):
@@ -74,7 +70,7 @@ class RatingUnitTests(unittest.TestCase):
             "ratingID": None,
             "studentID": 1,
             "userID": 1,
-            "Title": "Good Sleep",
+            "title": "Good Sleep",  # Use lowercase 'title'
             "description": "After a great massage, I had a good nap during lunch"
         })
 
@@ -88,14 +84,13 @@ class StudentUnitTesting(unittest.TestCase):
         assert student.year == 2
         assert student.karma == 88
 
-
     def test_get_student_json(self):
         student = Student("Alice Smith", "Data Science", 4, 12)
         student_json = student.get_json()
         self.assertDictEqual(student_json, {
             "studentID": None,
             "name": "Alice Smith",
-            "major": "Data Science",
+            "degree": "Data Science",
             "year": 4,
             "karma": 12,
         })
@@ -110,16 +105,14 @@ class StudentUnitTesting(unittest.TestCase):
 
     def test_update_karma(self):
         student = Student("Alice Smith", "Data Science",4, 13)
-        student.update_karma(5)
+        student.update(5)
         assert student.karma == 5
  
     def test_delete_student(self):
-        student = Student("Bob Johnson", "Electrical Engineering")
+        student = Student("Bob Johnson", "Electrical Engineering", 4, 55)
         student_id = student.studentID  # Get the student's ID before deletion
-        student.delete_student(1)
-        # Check if the student can no longer be retrieved by ID
-        deleted_student = get_student_by_id(student_id)
-        assert deleted_student is None
+        student.delete(1)
+
 
 
 
@@ -171,3 +164,49 @@ class RatingIntegrationTests(unittest.TestCase):
         }], reviews)
 
 class StudentIntegrationTests(unittest.TestCase):
+    def test_add_student(self):
+        student = add_student("John Doe", "Computer Science", 2, 88)
+        assert student.studentName == "John Doe"
+        assert student.degree == "Computer Science"
+        assert student.year == 2
+        assert student.karma == 88
+
+    def test_get_student_by_id(self):
+        student = get_student_by_id(1)
+        assert student.studentName == "John Doe"
+        assert student.degree == "Computer Science"
+        assert student.year == 2
+        assert student.karma == 88
+
+    def test_get_students_by_name(self):
+        students = get_students_by_name("John Doe")
+        assert len(students) == 1
+        student = students[0]
+        assert student.studentName == "John Doe"
+        assert student.degree == "Computer Science"
+
+    def test_get_all_students(self):
+        students = get_all_students()
+        assert len(students) >= 1  # There should be at least one student in the database
+
+    def test_update_student(self):
+        student = get_student_by_id(1)
+        update_student(student.studentID, studentName="Jane Smith", degree="Software Engineering", year=3, karma=9)
+        updated_student = get_student_by_id(1)
+        assert updated_student.studentName == "Jane Smith"
+        assert updated_student.degree == "Software Engineering"
+        assert updated_student.year == 3
+        assert updated_student.karma == 9
+
+    def test_update_karma(self):
+        student = get_student_by_id(1)
+        update_karma(student.studentID, 5)
+        updated_student = get_student_by_id(1)
+        assert updated_student.karma == 5
+
+    def test_delete_student(self):
+        student = get_student_by_id(1)
+        student_id = student.studentID
+        delete_student(student_id)
+        deleted_student = get_student_by_id(student_id)
+        assert deleted_student is None
