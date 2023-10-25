@@ -3,14 +3,29 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
+from App.models import User, Student, Rating
 from App.controllers import (
+    #User Teesting
     create_user,
     get_all_users_json,
     login,
     get_user,
     get_user_by_username,
     update_user
+
+    #Rating Testing
+    add_review,
+    list_review_log_json,
+
+    #Student Testing
+    add_student,
+    get_student_by_id,
+    get_students_by_name,
+    get_all_students,
+    update_student,
+    update_karma,
+    delete_student
+
 )
 
 
@@ -41,6 +56,15 @@ class UserUnitTests(unittest.TestCase):
         password = "mypass"
         user = User("bob", password)
         assert user.check_password(password)
+
+""" 
+class RatingUnitTests(unittest.TestCase):
+
+    def test_add_review(self):
+        rating = Rating(1, 1, 'Good Sleep', 'After a great massage i had a good nap during lunch')
+        user__json = rating.get_json()
+        self.assertDictEqual(user__json, {"ratingID":None, "studentID": 1, "userID": 1, "Title":"Good Sleep", "description":"After a great massage i had a good nap during lunch" })
+ """
 
 '''
     Integration Tests
