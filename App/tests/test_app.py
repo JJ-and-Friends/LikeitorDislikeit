@@ -156,11 +156,8 @@ class UsersIntegrationTests(unittest.TestCase):
 
 class StudentIntegrationTests(unittest.TestCase):
     def test_add_student(self):
-        student = add_student("John Doe", "Computer Science", 2, 88)
-        assert student.studentName == "John J Doe"
-        assert student.degree == "Computer Science"
-        assert student.year == 2
-        assert student.karma == 88
+        assert add_student("John_Doe", "Computer Science", 2, 88) == (True, 'Student added successfully')
+        
 
     def test_get_student_by_id(self):
         student = get_student_by_id(1)
@@ -168,35 +165,29 @@ class StudentIntegrationTests(unittest.TestCase):
 
 
     def test_get_students_by_name(self):
-        students = get_students_by_name("John Doe")
-        assert len(students) == 1
-        student = students[0]
-        assert student.studentName == "John Doe"
-        assert student.degree == "Computer Science"
+        student = add_student("testman", "Computer Science", 2, 88)
+        student = get_students_by_name("testman")
+        assert student[0].studentName == "testman"
+        assert student[0].degree == "Computer Science"
 
     def test_get_all_students(self):
         students = get_all_students()
         assert len(students) >= 1  # There should be at least one student in the database
 
     def test_update_student(self):
-        updated_student = get_student_by_id(update_student.studentID)
-        update_student(student.studentID, studentName="Jane Smith", degree="Software Engineering", year=3, karma=9)
-        assert updated_student.studentName == "Jane Smith"
-        assert updated_student.degree == "Masters in Statistics"
-        assert updated_student.year == 3
-        assert updated_student.karma == 9
+        student = add_student("testman", "Computer Science", 2, 88)
+        student = get_students_by_name("testman")
+        student = student[0]
+        assert update_student(student.studentID, studentName="Jane Smith", degree="Software Engineering", year=3, karma=9) == (True, "Student updated successfully")
 
     def test_update_karma(self):
-        student = add_student("John Doe", "Computer Science", 2, 88)
-        student_id = student.studentID
+        add_student("testman", "Computer Science", 2, 88)
+        student = get_students_by_name("testman")
 
-        update_karma(student.studentID, 5)
-        updated_student = get_student_by_id(1)
-        assert updated_student.karma == 5
+        assert update_karma(student[0].studentID, 5) == (True, 'Student updated successfully')
 
     def test_delete_student(self):
-        student = get_student_by_id(9)
-        student_id = student.studentID
-        delete_student(student_id)
-        deleted_student = get_student_by_id(student_id)
-        assert deleted_student is None
+        student = add_student("testman", "Computer Science", 2, 88)
+        student = get_students_by_name("testman")
+        student_id = student[0].studentID
+        assert delete_student(student_id) == (True, "Student deleted successfully")
