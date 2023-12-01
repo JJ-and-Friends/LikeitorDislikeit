@@ -1,10 +1,63 @@
-{% extends "layout.html" %}
-{% block title %}Flask MVC App{% endblock %}
-{% block page %}Flask MVC App{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myRating Site</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-{{ super() }}
+    <link rel="stylesheet" href="styles.css">
 
-{% block content %}
-    <h1>JJ & Friends</h1>
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
-{% endblock %}
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+</head>
+<body>
+  
+  <nav>
+    <div class="nav-wrapper">
+      <img id="navLogo" src="/images/student rating logo white.png">
+      <a href="index.html" class="hide-on-med-and-down brand-logo">myRating</a>
+      <ul id="nav-mobile" class="right">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Signup</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <img id="admin" class="left" src="/images/admin gradient.png">
+      <main class="container">
+        
+        <!-- Remove the hide-on-med-and-down class from the following div -->
+        <div class="z-depth-3 mask"></div>
+        <h3>The University of the West Indies</h3>
+        <h1>myRating Site</h1>
+        <img id="bigLogo" src="/images/myRating app circle one.png">
+
+        <div class="center-align">
+          <!-- Materialize CSS Button -->
+          <a class="waves-effect waves-light btn btn-large big-button center" href="login.html">Login</a>
+        </div>
+        <h4>Don't have an account?</h4>
+        <div class="center-align">
+          <!-- Materialize CSS Button -->
+          <a class="waves-effect waves-light btn normal-button center" href="signup.html">Signup</a>
+        </div>
+        <h3>myRating 2023</h3>
+
+        
+      </main> 
+
+      <div class="footer"></div>
+
+    <script>
+         M.AutoInit();
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,178 @@
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
+.nav-wrapper {
+    background: linear-gradient(to right, #233CB4, #727AF3); /* Adjust the color codes as needed */
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 220vw;
+    height: 150vh;
+    background-image: linear-gradient(240deg, #122D85, #4659E3, #9E9EFB, #F4F2FF);
+    z-index: -2; /* Set a higher z-index */
+    transform: rotate(150deg); /* Rotate the mask element */
+    transform-origin: center;
+    clip-path: polygon(0% 10%, 100% 50%, 100% 100%, 0 100%);
+}
+
+
+#admin {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100vh;
+    z-index: -10;
+}
+
+
+
+h1 {
+    font-family: 'Outfit'; /* Add the Outfit Google Font */
+    color: rgb(0, 0, 0); /* Set the text color to white or your preferred color */
+    text-align: center;
+    font-weight: bold;
+    font-size: 10vh;
+}
+
+h2 {
+    font-family: 'Outfit'; /* Add the Outfit Google Font */
+    color: rgb(0, 0, 0); /* Set the text color to white or your preferred color */
+    text-align: center;
+}
+
+h3 {
+    font-size: large;
+    font-family: 'Outfit'; /* Add the Outfit Google Font */
+    color: rgb(0, 0, 0); /* Set the text color to white or your preferred color */
+    text-align: center;
+}
+
+h4 {
+    font-size: large;
+    font-family: 'Outfit'; /* Add the Outfit Google Font */
+    color: white; /* Set the text color to white or your preferred color */
+    text-align: center;
+}
+
+.brand-logo{
+    font-family: 'Outfit';
+    color: white;
+}
+
+#navLogo{
+    max-width: 50px;
+    max-height: 50px;
+    margin: 5px;
+}
+
+#bigLogo {
+    max-width: 50vh;
+    max-height: 50vh;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: auto;
+    
+}
+
+.big-button {
+    font-size: 40px;
+    font-family: 'Outfit';
+    font-weight:bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 50px;
+    color: black;
+    background: white;
+    transition: background-color 0.5s ease;
+    transition: transform 0.5s ease-in-out; /* Faster and smoother transition */
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.big-button:hover {
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    animation: moveUpDown 0.3s infinite alternate ease-in-out; /* Faster and smoother animation */
+}
+
+@keyframes moveUpDown {
+    to {
+        transform: translateY(-5px); /* Smaller distance for a subtler effect */
+    }
+}
+
+.normal-button {
+    font-size: 20px;
+    font-family: 'Outfit';
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 50px;
+    color: rgb(255, 255, 255);
+    background: black;
+    transition: background-color 0.5s ease;
+}
+
+.normal-button:hover {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+}
+
+.input-field {
+    margin-bottom: 80px;
+    color: #122D85;
+}
+
+  /* label color */
+  .input-field label {
+    color: #000;
+  }
+  /* label focus color */
+  .input-field input[type=text]:focus + label {
+    color: #000;
+  }
+  /* label underline focus color */
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+  /* valid color */
+  .input-field input[type=text].valid {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+  /* invalid color */
+  .input-field input[type=text].invalid {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+  /* icon prefix focus color */
+  .input-field .prefix.active {
+    color: #000;
+  }
+
+.footer {
+    background-color: black;
+    height: 100vh;
+    z-index: -1;
+}
